@@ -10,9 +10,7 @@ from openpyxl import Workbook, load_workbook
 import tkinter as tk
 from tkinter import ttk, simpledialog, messagebox
 
-# ============================================================
 # CONFIGURATION
-# ============================================================
 DATASET_DIR = "images"
 RECOGNIZER_FILE = "face_recognizer.yml"
 LABELS_FILE = "labels.npy"
@@ -26,9 +24,8 @@ CONFIDENCE_THRESHOLD = 85
 
 os.makedirs(DATASET_DIR, exist_ok=True)
 
-# ============================================================
 # ATTENDANCE FILE INITIALIZATION
-# ============================================================
+
 def ensure_attendance_file():
     if not os.path.exists(ATTENDANCE_FILE):
         wb = Workbook()
@@ -39,9 +36,8 @@ def ensure_attendance_file():
 
 ensure_attendance_file()
 
-# ============================================================
+
 # GLOBALS
-# ============================================================
 running = False
 capture_mode = False
 capture_name = ""
@@ -74,9 +70,9 @@ except Exception:
     recognizer_available = False
     recognizer = None
 
-# ============================================================
+
 # HELPER UTILITIES
-# ============================================================
+
 def get_today_date():
     return datetime.now().strftime("%Y-%m-%d")
 
@@ -86,9 +82,9 @@ def safe_status(msg):
     else:
         print("STATUS:", msg)
 
-# ============================================================
+
 # LOAD & SAVE RECOGNIZER
-# ============================================================
+
 def load_trained_recognizer():
     global recognizer, label_dict
 
@@ -110,9 +106,9 @@ def load_trained_recognizer():
         safe_status(f"❌ Load error: {e}")
         label_dict = {}
 
-# ============================================================
+
 # ATTENDANCE FUNCTIONS
-# ============================================================
+
 
 def show_fading_message(text):
     msg = tk.Label(root, text=text, fg="lightgreen", bg="#071029",
@@ -184,9 +180,9 @@ def mark_attendance_excel(name):
         safe_status(f"❌ Write error: {e}")
 
 
-# ============================================================
+
 # TRAINING MODEL
-# ============================================================
+
 def train_recognizer_threadsafe():
     global training_thread
     if training_thread and training_thread.is_alive():
@@ -253,9 +249,8 @@ def train_recognizer():
     except Exception as e:
         safe_status(f"❌ Training error: {e}")
 
-# ============================================================
+
 # MAIN CAMERA LOOP
-# ============================================================
 def detect_faces():
     global capture_count, capture_mode
 
@@ -328,9 +323,9 @@ def detect_faces():
 
     video_label.after(30, detect_faces)
 
-# ============================================================
+
 # STUDENT CONTROLS
-# ============================================================
+
 def start_capture():
     global capture_mode, capture_name, capture_count
 
@@ -387,9 +382,8 @@ def close_app():
     root.quit()
     root.destroy()
 
-# ============================================================
 # STUDENT MANAGEMENT
-# ============================================================
+
 def update_student_list():
     student_tree.delete(*student_tree.get_children())
     for name in sorted(os.listdir(DATASET_DIR)):
@@ -420,9 +414,9 @@ def delete_student():
     except Exception as e:
         messagebox.showerror("Error", str(e))
 
-# ============================================================
+
 # ATTENDANCE VIEW + SEARCH
-# ============================================================
+
 def read_attendance_rows():
     rows = []
     try:
@@ -453,9 +447,7 @@ def clear_filters():
     search_date_var.set("")
     show_attendance()
 
-# ============================================================
 # GUI INITIALIZATION
-# ============================================================
 root = tk.Tk()
 root.title("Face Recognition Attendance System")
 root.geometry("1180x760")
@@ -580,9 +572,8 @@ ttk.Button(s_tools, text="Load Recognizer", command=load_trained_recognizer).pac
 ttk.Button(s_tools, text="Refresh Attendance", command=show_attendance).pack(pady=5)
 ttk.Button(s_tools, text="Refresh Students", command=update_student_list).pack(pady=5)
 
-# ============================================================
 # FINAL INIT
-# ============================================================
 show(home)
 root.protocol("WM_DELETE_WINDOW", close_app)
 root.mainloop()
+
