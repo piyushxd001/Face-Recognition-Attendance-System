@@ -28,6 +28,16 @@ The system captures student images, trains a recognition model, and automaticall
 - OpenPyXL (Excel handling)
 
 ---
+## 📸 Screenshots
+
+### 🏠 Home Page
+![Home](assets/home.png)
+
+### 👥 Attendance Page
+![Attendance](assets/attendance.png)
+
+### 📋 Setting Page
+![Attendance](assets/settings.png)
 
 ## 📦 Installation
 
@@ -36,3 +46,4 @@ The system captures student images, trains a recognition model, and automaticall
 ```bash
 git clone https://github.com/piyushxd001/Face-Recognition-Attendance-System.git
 cd Face-Recognition-Attendance-System
+
